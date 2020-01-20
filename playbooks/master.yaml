@@ -1,0 +1,16 @@
+# This is the master playbook, I like to keep things modular, so i make a master playbook
+# So that the playbook itself won't be bloated with things that shouldn't run when you don't need it
+# The sole purpose of this playbook is to call other playbooks
+# This is going to be the highest layer of the plays, and everything should be simple
+# The master playbook must be working at ALL TIMES, no matter what circumstances. no BUGS allowed
+
+- import_playbook: systemupdate.yaml
+  tags: [never,update]
+- import_playbook: apache.yaml
+  tags: [install,update]
+- import_playbook: webapp.yaml
+  tags: [install,update]
+- import_playbook: backend.yaml
+  tags: [config]
+- import_playbook: landingpage.yaml
+  tags: [config]

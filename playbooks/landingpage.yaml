@@ -1,0 +1,11 @@
+---
+- name: Deploy landing page
+  hosts: landingpage
+  become: yes
+  tasks:
+  - name: change the content in index.html
+    template:
+      src: "{{ playbook_dir }}/files/landingpage.html.j2"
+      dest: /var/www/html/index.html
+      owner: apache
+      mode: 0664

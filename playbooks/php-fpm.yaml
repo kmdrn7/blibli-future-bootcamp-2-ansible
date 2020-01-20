@@ -1,0 +1,19 @@
+---
+- name: Installing php-fpm
+  hosts: php-server
+  become: yes
+  tasks:
+    - name: Install php-fpm
+      yum:
+        name: php-fpm
+        state: latest
+    - name: Configure port
+      lineinfile:
+        path: /etc/php-fpm.d/www.conf
+        regexp: '^listen ='
+        line: 'listen = /var/run/php-fpm.sock'
+        state: present
+    - name: Make sure php-fpm is running
+      service:
+        name: php-fpm
+        state: restarted

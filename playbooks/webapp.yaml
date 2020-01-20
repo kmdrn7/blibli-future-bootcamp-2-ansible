@@ -1,0 +1,22 @@
+---
+- name: Deploy landing page
+  hosts: landingpage
+  become: yes
+  tasks:
+  - name: Make sure git is installed
+    yum:
+      name: git
+      state: latest
+  - name: Clone the app repo
+    git:
+      repo: 'https://github.com/flexdinesh/dev-landing-page.git'
+      dest: /var/www/html
+      force: yes
+      version: master
+  - name: make sure htmldir is owned by apache
+    file:
+      name: /var/www/html
+      state: directory
+      owner: apache
+      group: apache
+      recurse: yes

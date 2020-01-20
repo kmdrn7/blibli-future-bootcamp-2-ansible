@@ -1,0 +1,26 @@
+---
+- name: Setup NGINX Web Server
+  hosts: nginx-web-server
+  become: yes
+  tasks:
+  - name: Add CentOS EPEL Release
+    yum:
+      name: epel-release
+      state: present
+  - name: Install NGINX
+    yum:
+      name: nginx
+      state: present
+  - name: ensure nginx is running
+    service:
+      name: nginx
+      state: started
+  - name: Open port 80 for http access
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+  - name: Restart the firewalld service to load in the firewall changes
+    service:
+      name: firewalld
+      state: restarted

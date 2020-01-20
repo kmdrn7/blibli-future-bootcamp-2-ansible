@@ -1,0 +1,11 @@
+---
+- name: Deploy Backend page
+  hosts: backend
+  become: yes
+  tasks:
+  - name: change the content in backend.html
+    template:
+      src: "{{ playbook_dir }}/files/backend.html.j2"
+      dest: /var/www/html/backend.html
+      owner: apache
+      mode: 0664
